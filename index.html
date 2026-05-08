@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wimbe Traduções Lda - Oficial</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Navegação com Logo -->
+    <nav>
+        <div class="logo-container">
+            <img src="image.png" alt="Wimbe Traduções" class="logo-img" onerror="this.style.display='none'">
+            <span class="logo-text">Wimbe <span class="highlight">Traduções</span></span>
+        </div>
+        <div class="nav-links">
+            <a href="#inicio">Início</a>
+            <a href="#gratuitos">Documentos Grátis</a>
+            <a href="#cotacao">Pedir Cotação</a>
+            <a href="#contato">Contato</a>
+        </div>
+    </nav>
+
+    <header class="hero" id="inicio">
+        <h1>Traduções Oficiais e Jurídicas</h1>
+        <p>Especialistas em Decretos, Artigos e Concursos. Qualidade e fidelidade linguística para o seu negócio.</p>
+        <div class="hero-btns">
+            <button class="btn btn-dourado" onclick="scrollToSection('gratuitos')">Ver Documentos Gratuitos</button>
+            <button class="btn btn-outline" onclick="scrollToSection('cotacao')">Pedir Cotação</button>
+        </div>
+    </header>
+
+    <!-- Seção de Cotação -->
+    <section class="container-alt" id="cotacao">
+        <div class="cotacao-wrapper">
+            <div class="cotacao-text">
+                <h2>Precisa traduzir um documento específico?</h2>
+                <p>Envie-nos o seu ficheiro (PDF, Word ou Imagem) e receba um orçamento personalizado em poucos minutos.</p>
+                <ul class="cotacao-list">
+                    <li><i class="fas fa-check-circle"></i> Confidencialidade Garantida</li>
+                    <li><i class="fas fa-check-circle"></i> Tradução Técnica Especializada</li>
+                    <li><i class="fas fa-check-circle"></i> Prazos de Entrega Rápidos</li>
+                </ul>
+            </div>
+            <div class="cotacao-action">
+                <div class="action-card">
+                    <h3>Solicitar Orçamento Agora</h3>
+                    <p>Escolha a via de envio preferida:</p>
+                    <button class="btn btn-wpp" onclick="pedirCotacao('WhatsApp')">
+                        <i class="fab fa-whatsapp"></i> Via WhatsApp
+                    </button>
+                    <button class="btn btn-mail" onclick="pedirCotacao('Email')">
+                        <i class="fas fa-envelope"></i> Via E-mail
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Espaço para Documentos Gratuitos (Integrado com Google Drive) -->
+    <section class="container" id="gratuitos">
+        <h2 class="section-title">Conteúdo Gratuito para Download</h2>
+        <p class="section-subtitle">Acesso direto ao nosso repositório no Google Drive para consulta imediata.</p>
+        
+        <div class="grid-docs">
+            <!-- Documento 1 -->
+            <div class="card card-free">
+                <i class="fas fa-file-pdf doc-icon"></i>
+                <span class="badge badge-free">Disponível</span>
+                <h3>Decreto Presidencial 01/26</h3>
+                <p>Tradução integral sobre as novas taxas aduaneiras em Moçambique.</p>
+                <!-- Cole o link do Google Drive no href -->
+                <a href="https://drive.google.com/drive/mobile/folders/1Vzr4qRKCHW77SMO3CNZ_INe28TwFah8Q?usp=drive_link&fbclid=PAdGRleAPAnjpleHRuA2FlbQExAHNydGMGYXBwX2lkDzEyNDAyNDU3NDI4NzQxNAABp5gPzs-cgvXDDifuOLR3DJui5ORthhwFz3ydsRvX7Tv9vUJjjXx8ZSL9jbdf_aem_Q__LvXdDfY-iKNNRQ0z_8g&pli=1" target="_blank" class="btn btn-card">Baixar via Google Drive</a>
+            </div>
+
+            <!-- Documento 2 -->
+            <div class="card card-free">
+                <i class="fas fa-file-word doc-icon"></i>
+                <span class="badge badge-free">Disponível</span>
+                <h3>Guia de Concursos Públicos</h3>
+                <p>Modelo traduzido de formulários para submissão de propostas.</p>
+                <a href="https://drive.google.com/drive/mobile/folders/1Vzr4qRKCHW77SMO3CNZ_INe28TwFah8Q?usp=drive_link&fbclid=PAdGRleAPAnjpleHRuA2FlbQExAHNydGMGYXBwX2lkDzEyNDAyNDU3NDI4NzQxNAABp5gPzs-cgvXDDifuOLR3DJui5ORthhwFz3ydsRvX7Tv9vUJjjXx8ZSL9jbdf_aem_Q__LvXdDfY-iKNNRQ0z_8g&pli=1" target="_blank" class="btn btn-card">Baixar via Google Drive</a>
+            </div>
+
+            <!-- Documento 3 -->
+            <div class="card card-free">
+                <i class="fas fa-newspaper doc-icon"></i>
+                <span class="badge badge-free">Disponível</span>
+                <h3>Artigo: Investimento em IT</h3>
+                <p>Análise traduzida sobre o crescimento do setor tecnológico na África Austral.</p>
+                <a href="https://drive.google.com/drive/mobile/folders/1Vzr4qRKCHW77SMO3CNZ_INe28TwFah8Q?usp=drive_link&fbclid=PAdGRleAPAnjpleHRuA2FlbQExAHNydGMGYXBwX2lkDzEyNDAyNDU3NDI4NzQxNAABp5gPzs-cgvXDDifuOLR3DJui5ORthhwFz3ydsRvX7Tv9vUJjjXx8ZSL9jbdf_aem_Q__LvXdDfY-iKNNRQ0z_8g&pli=1" target="_blank" class="btn btn-card">Baixar via Google Drive</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rodapé Detalhado -->
+    <footer id="contato">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Wimbe Traduções Lda</h3>
+                <p>Sua parceira estratégica em serviços linguísticos, garantindo precisão técnica em cada palavra traduzida.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Acesso Rápido</h4>
+                <ul>
+                    <li><a href="#inicio">Início</a></li>
+                    <li><a href="#gratuitos">Documentos Grátis</a></li>
+                    <li><a href="#cotacao">Pedir Orçamento</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contato e Localização</h4>
+                <p><i class="fas fa-envelope"></i> comercial@wimbetraducoes.co.mz</p>
+                <p><i class="fas fa-phone"></i> +258 8X XXX XXXX</p>
+                <p><i class="fas fa-map-marker-alt"></i> Maputo, Moçambique</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Wimbe Traduções Lda. Design Clássico & Profissional.</p>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/258XXXXXXXXX" class="whatsapp-btn" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script src="script.js"></script>
+</body>
+</html>
