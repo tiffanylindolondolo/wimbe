@@ -26,14 +26,17 @@ function pedirCotacao(via) {
 
 // ========== CARROSSEL MOBILE ==========
 let currentSlide = 0;
-const totalSlides = 3;
 let autoPlayInterval;
+const totalSlides = 3;
 
 function updateCarousel() {
-    const track = document.getElementById('carouselTrack');
-    if (track) {
-        const slideWidth = track.clientWidth / totalSlides;
-        track.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
+    const wrapper = document.getElementById('docsWrapper');
+    if (wrapper && window.innerWidth <= 768) {
+        const slideWidth = wrapper.clientWidth;
+        wrapper.scrollTo({
+            left: currentSlide * slideWidth,
+            behavior: 'smooth'
+        });
     }
     
     // Atualizar dots
@@ -51,7 +54,7 @@ function nextSlide() {
     if (currentSlide < totalSlides - 1) {
         currentSlide++;
     } else {
-        currentSlide = 0; // Volta ao primeiro (loop)
+        currentSlide = 0;
     }
     updateCarousel();
     resetAutoPlay();
@@ -61,7 +64,7 @@ function prevSlide() {
     if (currentSlide > 0) {
         currentSlide--;
     } else {
-        currentSlide = totalSlides - 1; // Vai para o último (loop)
+        currentSlide = totalSlides - 1;
     }
     updateCarousel();
     resetAutoPlay();
@@ -74,9 +77,11 @@ function goToSlide(index) {
 }
 
 function startAutoPlay() {
-    autoPlayInterval = setInterval(() => {
-        nextSlide();
-    }, 5000); // Muda a cada 5 segundos
+    if (window.innerWidth <= 768) {
+        autoPlayInterval = setInterval(() => {
+            nextSlide();
+        }, 5000);
+    }
 }
 
 function resetAutoPlay() {
@@ -100,17 +105,48 @@ function createDots() {
     }
 }
 
-// Inicializar carrossel quando a página carregar
-document.addEventListener('DOMContentLoaded', () => {
-    createDots();
-    updateCarousel();
-    startAutoPlay();
-    
-    // Ajustar carrossel quando a janela for redimensionada
-    window.addEventListener('resize', () => {
+// Detectar quando o scroll do wrapper termina (para sincronizar os dots)
+function setupScrollListener() {
+    const wrapper = document.getElementById('docsWrapper');
+    if (wrapper) {
+        wrapper.addEventListener('scroll', () => {
+            if (window.innerWidth <= 768) {
+                const scrollPosition = wrapper.scrollLeft;
+                const slideWidth = wrapper.clientWidth;
+                const newSlide = Math.round(scrollPosition / slideWidth);
+                if (newSlide !== currentSlide && newSlide >= 0 && newSlide < totalSlides) {
+                    currentSlide = newSlide;
+                    const dots = document.querySelectorAll('.dot');
+                    dots.forEach((dot, index) => {
+                        if (index === currentSlide) {
+                            dot.classList.add('active');
+                        } else {
+                            dot.classList.remove('active');
+                        }
+                    });
+                    resetAutoPlay();
+                }
+            }
+        });
+    }
+}
+
+// Reiniciar carrossel quando redimensionar a tela
+function handleResize() {
+    if (window.innerWidth <= 768) {
+        createDots();
+        currentSlide = 0;
         updateCarousel();
-    });
-});
+        if (!autoPlayInterval) {
+            startAutoPlay();
+        }
+    } else {
+        if (autoPlayInterval) {
+            clearInterval(autoPlayInterval);
+            autoPlayInterval = null;
+        }
+    }
+}
 
 // Menu Mobile
 function toggleMobileMenu() {
@@ -137,6 +173,14 @@ document.addEventListener('click', function(event) {
             menu.style.display = 'none';
         }
     }
+});
+
+// Inicialização
+document.addEventListener('DOMContentLoaded', () => {
+    createDots();
+    setupScrollListener();
+    handleResize();
+    window.addEventListener('resize', handleResize);
 });
 
 console.log("Website Wimbe Traduções Lda carregado.");
