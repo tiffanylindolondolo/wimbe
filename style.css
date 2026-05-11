@@ -10,7 +10,7 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-body { font-family: 'Georgia', serif; color: var(--texto); line-height: 1.6; scroll-behavior: smooth; }
+body { font-family: 'Georgia', serif; color: var(--texto); line-height: 1.6; scroll-behavior: smooth; overflow-x: hidden; }
 
 /* Navegação */
 nav {
@@ -38,6 +38,38 @@ nav {
     transition: 0.3s;
 }
 .nav-links a:hover { color: var(--dourado); }
+
+.mobile-menu-btn {
+    display: none;
+    color: var(--branco);
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+
+.mobile-menu {
+    display: none;
+    position: fixed;
+    top: 80px;
+    left: 0;
+    width: 100%;
+    background: var(--azul);
+    flex-direction: column;
+    z-index: 999;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.mobile-menu a {
+    color: var(--branco);
+    text-decoration: none;
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.mobile-menu a:hover {
+    color: var(--dourado);
+}
 
 /* Hero */
 .hero {
@@ -77,12 +109,95 @@ nav {
 .section-title { text-align: center; color: var(--azul); font-size: 2.2rem; margin-bottom: 10px; }
 .section-subtitle { text-align: center; margin-bottom: 50px; color: #666; }
 
-.grid-docs {
+/* Desktop Grid */
+.desktop-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
 }
 
+/* Mobile Carousel - escondido por padrão */
+.mobile-carousel {
+    display: none;
+    position: relative;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.carousel-container {
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-slide {
+    min-width: 100%;
+    padding: 10px;
+}
+
+.carousel-slide .card {
+    margin: 0;
+    width: 100%;
+}
+
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--azul);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: 0.3s;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-arrow:hover {
+    background: var(--dourado);
+}
+
+.carousel-arrow.prev {
+    left: -20px;
+}
+
+.carousel-arrow.next {
+    right: -20px;
+}
+
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ccc;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.dot.active {
+    background: var(--dourado);
+    width: 25px;
+    border-radius: 5px;
+}
+
+/* Card */
 .card {
     background: var(--cinza-fundo);
     padding: 40px 30px;
@@ -96,7 +211,7 @@ nav {
 .doc-icon { font-size: 3rem; color: var(--azul); margin-bottom: 20px; }
 .badge-free { background: #27ae60; top: 15px; right: 15px; position: absolute; padding: 5px 12px; color: white; font-size: 0.8rem; }
 
-.btn-card { background: white; border: 2px solid var(--azul); color: var(--azul); width: 100%; margin-top: 20px; font-weight: bold; text-align: center; }
+.btn-card { background: white; border: 2px solid var(--azul); color: var(--azul); width: 100%; margin-top: 20px; font-weight: bold; text-align: center; text-decoration: none; display: inline-block; }
 .btn-card:hover { background: var(--azul); color: white; }
 
 /* Rodapé */
@@ -123,9 +238,29 @@ footer { background: #1a1a1a; color: #ccc; padding: 60px 5% 20px; }
     font-size: 35px; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
+/* Responsivo */
 @media (max-width: 768px) {
     .nav-links { display: none; }
+    .mobile-menu-btn { display: block; }
+    
     .hero h1 { font-size: 2rem; }
     .hero-btns { flex-direction: column; align-items: center; }
     .btn { width: 90%; }
+    
+    /* Esconde o grid desktop */
+    .desktop-grid { display: none; }
+    
+    /* Mostra o carrossel mobile */
+    .mobile-carousel { display: block; }
+    
+    .carousel-arrow.prev { left: 0; }
+    .carousel-arrow.next { right: 0; }
+    
+    .container { padding: 60px 5%; }
+}
+
+/* Tablet: mostra grid normal */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .desktop-grid { display: grid; }
+    .mobile-carousel { display: none; }
 }
