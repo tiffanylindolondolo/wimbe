@@ -12,7 +12,7 @@ function scrollToSection(sectionId) {
 // Função para Pedido de Cotação
 function pedirCotacao(via) {
     const meuNumero = "258XXXXXXXXX"; // Substitua pelo seu número
-    const email = "comercial@wimbetraducoes.co.mz";
+    const email = "comercial@wimbetradutores.co.mz";
     
     if (via === 'WhatsApp') {
         const texto = encodeURIComponent("Olá! Gostaria de pedir uma cotação para a tradução de um documento. Como posso enviar o arquivo?");
@@ -29,17 +29,7 @@ let currentSlide = 0;
 let autoPlayInterval;
 const totalSlides = 3;
 
-function updateCarousel() {
-    const wrapper = document.getElementById('docsWrapper');
-    if (wrapper && window.innerWidth <= 768) {
-        const slideWidth = wrapper.clientWidth;
-        wrapper.scrollTo({
-            left: currentSlide * slideWidth,
-            behavior: 'smooth'
-        });
-    }
-    
-    // Atualizar dots
+function updateDots() {
     const dots = document.querySelectorAll('.dot');
     dots.forEach((dot, index) => {
         if (index === currentSlide) {
@@ -50,34 +40,72 @@ function updateCarousel() {
     });
 }
 
-function nextSlide() {
-    if (currentSlide < totalSlides - 1) {
-        currentSlide++;
-    } else {
-        currentSlide = 0;
+function syncSlideFromScroll() {
+    const wrapper = document.getElementById('docsWrapper');
+    if (wrapper && window.innerWidth <= 768) {
+        const scrollPosition = wrapper.scrollLeft;
+        const slideWidth = wrapper.clientWidth;
+        const newSlide = Math.round(scrollPosition / slideWidth);
+        if (newSlide !== currentSlide && newSlide >= 0 && newSlide < totalSlides) {
+            currentSlide = newSlide;
+            updateDots();
+            resetAutoPlay();
+        }
     }
-    updateCarousel();
-    resetAutoPlay();
+}
+
+function nextSlide() {
+    const wrapper = document.getElementById('docsWrapper');
+    if (wrapper && window.innerWidth <= 768) {
+        if (currentSlide < totalSlides - 1) {
+            currentSlide++;
+        } else {
+            currentSlide = 0;
+        }
+        const slideWidth = wrapper.clientWidth;
+        wrapper.scrollTo({
+            left: currentSlide * slideWidth,
+            behavior: 'smooth'
+        });
+        updateDots();
+        resetAutoPlay();
+    }
 }
 
 function prevSlide() {
-    if (currentSlide > 0) {
-        currentSlide--;
-    } else {
-        currentSlide = totalSlides - 1;
+    const wrapper = document.getElementById('docsWrapper');
+    if (wrapper && window.innerWidth <= 768) {
+        if (currentSlide > 0) {
+            currentSlide--;
+        } else {
+            currentSlide = totalSlides - 1;
+        }
+        const slideWidth = wrapper.clientWidth;
+        wrapper.scrollTo({
+            left: currentSlide * slideWidth,
+            behavior: 'smooth'
+        });
+        updateDots();
+        resetAutoPlay();
     }
-    updateCarousel();
-    resetAutoPlay();
 }
 
 function goToSlide(index) {
-    currentSlide = index;
-    updateCarousel();
-    resetAutoPlay();
+    const wrapper = document.getElementById('docsWrapper');
+    if (wrapper && window.innerWidth <= 768) {
+        currentSlide = index;
+        const slideWidth = wrapper.clientWidth;
+        wrapper.scrollTo({
+            left: currentSlide * slideWidth,
+            behavior: 'smooth'
+        });
+        updateDots();
+        resetAutoPlay();
+    }
 }
 
 function startAutoPlay() {
-    if (window.innerWidth <= 768) {
+    if (window.innerWidth <= 768 && !autoPlayInterval) {
         autoPlayInterval = setInterval(() => {
             nextSlide();
         }, 5000);
@@ -87,7 +115,15 @@ function startAutoPlay() {
 function resetAutoPlay() {
     if (autoPlayInterval) {
         clearInterval(autoPlayInterval);
+        autoPlayInterval = null;
         startAutoPlay();
+    }
+}
+
+function stopAutoPlay() {
+    if (autoPlayInterval) {
+        clearInterval(autoPlayInterval);
+        autoPlayInterval = null;
     }
 }
 
@@ -105,46 +141,30 @@ function createDots() {
     }
 }
 
-// Detectar quando o scroll do wrapper termina (para sincronizar os dots)
 function setupScrollListener() {
     const wrapper = document.getElementById('docsWrapper');
     if (wrapper) {
         wrapper.addEventListener('scroll', () => {
             if (window.innerWidth <= 768) {
-                const scrollPosition = wrapper.scrollLeft;
-                const slideWidth = wrapper.clientWidth;
-                const newSlide = Math.round(scrollPosition / slideWidth);
-                if (newSlide !== currentSlide && newSlide >= 0 && newSlide < totalSlides) {
-                    currentSlide = newSlide;
-                    const dots = document.querySelectorAll('.dot');
-                    dots.forEach((dot, index) => {
-                        if (index === currentSlide) {
-                            dot.classList.add('active');
-                        } else {
-                            dot.classList.remove('active');
-                        }
-                    });
-                    resetAutoPlay();
-                }
+                syncSlideFromScroll();
             }
         });
     }
 }
 
-// Reiniciar carrossel quando redimensionar a tela
 function handleResize() {
     if (window.innerWidth <= 768) {
         createDots();
-        currentSlide = 0;
-        updateCarousel();
-        if (!autoPlayInterval) {
+        const wrapper = document.getElementById('docsWrapper');
+        if (wrapper) {
+            // Reset para o primeiro slide ao redimensionar
+            currentSlide = 0;
+            wrapper.scrollLeft = 0;
+            updateDots();
             startAutoPlay();
         }
     } else {
-        if (autoPlayInterval) {
-            clearInterval(autoPlayInterval);
-            autoPlayInterval = null;
-        }
+        stopAutoPlay();
     }
 }
 
@@ -160,7 +180,9 @@ function toggleMobileMenu() {
 
 function closeMobileMenu() {
     const menu = document.getElementById('mobileMenu');
-    menu.style.display = 'none';
+    if (menu) {
+        menu.style.display = 'none';
+    }
 }
 
 // Fechar menu ao clicar fora
@@ -183,4 +205,4 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', handleResize);
 });
 
-console.log("Website Wimbe Traduções Lda carregado.");
+console.log("Website Wimbe Tradutores Lda carregado.");

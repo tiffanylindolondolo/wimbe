@@ -108,11 +108,12 @@ nav {
 .container { padding: 80px 8%; background: var(--branco); }
 .section-title { text-align: center; color: var(--azul); font-size: 2.2rem; margin-bottom: 50px; }
 
-/* Desktop: Grid normal */
+/* ESTILO PADRÃO: DESKTOP - GRID */
 .docs-wrapper {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 30px;
+    transition: all 0.3s ease;
 }
 
 /* Card */
@@ -170,21 +171,30 @@ footer { background: #1a1a1a; color: #ccc; padding: 60px 5% 20px; }
     .hero-btns { flex-direction: column; align-items: center; }
     .hero-btns .btn { width: 90%; }
     
-    /* Transforma o wrapper em carrossel */
+    /* TRANSFORMA O GRID EM CARROSSEL - MESMO HTML */
     .docs-wrapper {
         display: flex;
-        overflow-x: hidden;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
         scroll-behavior: smooth;
         gap: 0;
-        scroll-snap-type: none;
+        grid-template-columns: none;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none; /* Esconde scrollbar no Firefox */
+    }
+    
+    .docs-wrapper::-webkit-scrollbar {
+        display: none; /* Esconde scrollbar no Chrome/Safari */
     }
     
     .doc-item {
         min-width: 100%;
         scroll-snap-align: start;
         margin: 0;
-        transform: none !important;
     }
+    
+    /* Remove o hover effect no mobile */
+    .card:hover { transform: none; }
     
     /* Mostra os controles do carrossel */
     .carousel-controls {
@@ -211,14 +221,15 @@ footer { background: #1a1a1a; color: #ccc; padding: 60px 5% 20px; }
         justify-content: center;
     }
     
-    .carousel-arrow:hover {
+    .carousel-arrow:active {
         background: var(--dourado);
+        transform: scale(0.95);
     }
     
     .carousel-dots {
         display: flex;
         justify-content: center;
-        gap: 10px;
+        gap: 12px;
     }
     
     .dot {
@@ -232,9 +243,16 @@ footer { background: #1a1a1a; color: #ccc; padding: 60px 5% 20px; }
     
     .dot.active {
         background: var(--dourado);
-        width: 20px;
+        width: 24px;
         border-radius: 4px;
     }
     
     .container { padding: 60px 5%; }
+}
+
+/* Tablet: mantém grid mas com 2 colunas */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .docs-wrapper {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
