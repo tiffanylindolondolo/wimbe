@@ -50,16 +50,7 @@ nav.scrolled {
     position: relative;
 }
 
-/* Divisão decorativa entre hero e conteúdo */
-.hero::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 60px;
-    background: linear-gradient(to bottom right, transparent 49%, var(--branco) 50%, var(--branco) 100%);
-}
+
 
 
 .logo-container { display: flex; align-items: center; }
